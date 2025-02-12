@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: database
+    image: postgres:12.0-alpine
+    env_file: ./backend/.env.postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: django_backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file: ./backend/.env
+      # Ejemplo de variable de entorno para conectar a la DB
+
+
+  frontend:
+    build: ./frontend
+    container_name: react_frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:80"
+
+volumes:
+  postgres_data:
+  # Si requieres volúmenes para archivos estáticos o media en Django, puedes definirlos aquí:
+  static:
+  media:
