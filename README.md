@@ -53,7 +53,8 @@ DEVOPS-INTERVIEW-ULTIMATE/
 
 - **Docker** y **Docker Compose** instalados en el equipo.
 - Acceso a Internet para descargar imágenes base y dependencias.
-- Para despliegues en la nube, acceso a una cuenta en AWS o GCP y conocimientos básicos para configurar instancias o servicios gestionados.
+- Para despliegues en la nube: una cuenta en AWS (o GCP) y conocimientos básicos para provisionar instancias y configurar redes.
+- Para producción, se recomienda usar almacenamiento persistente (volúmenes EBS) o servicios gestionados (RDS para la base de datos).
 
 ---
 
@@ -111,3 +112,61 @@ Esto realizará las siguientes acciones:
 - Backend (Django API): http://localhost:8000
 - Frontend (React): http://localhost:3000
 
+## Despliegue en la Nube (AWS)
+
+La solución actual puede desplegarse en AWS con algunos ajustes adicionales para entornos de producción:
+
+### 1. Provisionar la Infraestructura
+
+- Instancia EC2: Crea una instancia EC2 (por ejemplo, con Ubuntu) e instala Docker y Docker Compose.
+
+- Grupos de Seguridad: Configura los grupos de seguridad para permitir el tráfico en los puertos necesarios (por ejemplo, 5432 para la base de datos, 8000 para el backend y 3000 para el frontend). Alternativamente, si usas un balanceador de carga, ajusta los puertos según convenga.
+
+- Persistencia de Datos: Para la base de datos, evalúa usar un volumen EBS o considera utilizar un servicio gestionado como RDS.ruebaTecnicaCrafTech-HogneMatias
+
+
+### 2. Configurar el Despliegue en AWS
+
+Clona el repositorio en la instancia EC2 y ejecuta:
+```
+docker-compose -f docker-compose.production.yml up -d
+```
+
+## Detalles de Configuración
+
+- backend/Dockerfile:
+    - Usa la imagen python:3.9-slim.
+    - Instala dependencias del sistema (gcc, libpq-dev) y las dependencias Python definidas en requirements.txt.
+    - Copia el script entrypoint.sh que se encarga de esperar a la base de datos y aplicar migraciones.
+    - Expone el puerto 8000 y define el comando de inicio con Gunicorn.
+
+- frontend/Dockerfile:
+    - Utiliza una etapa de build basada en node:16 para construir la aplicación React.
+    - En una segunda etapa, utiliza nginx:alpine para servir los archivos estáticos generados (copiándolos al directorio por defecto de Nginx).
+    - Expone el puerto 80.
+
+- docker-compose.yml:
+
+    - Define tres servicios: db (Postgres), backend (Django) y frontend (React servida por Nginx).
+    - Se utilizan volúmenes para persistencia en la base de datos y para compartir el código (estos últimos son útiles en desarrollo, pero se deben ajustar en producción).
+
+- docker-compose.production.yml (opcional):
+
+    - Se recomienda tener un archivo de Compose para producción que elimine los montajes de volúmenes que sobrescriben la imagen y ajuste las variables de entorno (por ejemplo, DEBUG=False).
+
+
+## Notas y Justificación
+
+- Elección de Docker Compose:
+    Se eligió Docker Compose porque permite orquestar fácilmente múltiples servicios (base de datos, backend y frontend) en un solo archivo, facilitando tanto el despliegue local como en la nube.
+
+- Consideraciones para Producción en AWS:
+
+    - Para un entorno de producción en AWS se deben tener en cuenta:
+
+        - La persistencia de datos (utilizar volúmenes persistentes o servicios gestionados).
+        - Configuraciones de seguridad (grupos de seguridad, manejo de variables sensibles a través de AWS Secrets Manager o similares).
+        - La escalabilidad, que en un escenario real se podría abordar con ECS/EKS, aunque para este ejercicio se usa una instancia EC2.
+
+    - Flexibilidad:
+        La solución permite desplegar localmente con un único comando (docker-compose up --build) y, de forma similar, se puede adaptar para despliegues en la nube. Además, el pipeline de GitHub Actions se puede extender para incluir pasos de pruebas, validación y notificaciones.
