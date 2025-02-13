@@ -62,8 +62,8 @@ DEVOPS-INTERVIEW-ULTIMATE/
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu_usuario/DEVOPS-INTERVIEW-ULTIMATE.git
-cd DEVOPS-INTERVIEW-ULTIMATE
+git clone https://github.com/Hogne96/PruebaTecnicaCrafTech-HogneMatias.git
+cd PruebaTecnicaCrafTech-HogneMatias
 
 ### 2. Configurar variables de entorno del Backend
 
@@ -84,4 +84,21 @@ SQL_HOST=db
 SQL_PORT=5432
 
 Nota: La aplicación ha sido configurada para obtener los datos de la base de datos a través de estas variables (revisa el código fuente en settings.py para confirmar las variables utilizadas).
+
+### 3. Construir y levantar los contenedores
+
+Desde la raíz del proyecto, ejecuta:
+docker-compose up --build
+
+Esto realizará las siguientes acciones:
+
+Construirá la imagen del backend usando backend/Dockerfile.
+Construirá la imagen del frontend usando frontend/Dockerfile.
+Levantará el servicio de PostgreSQL con la configuración del archivo .env.postgres.
+Orquestará los tres servicios mediante el archivo docker-compose.yml.
+
+### 4. Verificar el funcionamiento
+
+Backend (Django API): http://localhost:8000
+Frontend (React): http://localhost:3000
 

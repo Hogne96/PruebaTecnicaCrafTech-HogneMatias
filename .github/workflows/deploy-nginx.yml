@@ -1,0 +1,23 @@
+name: Deploy Nginx on index.html changes
+
+on:
+  push:
+    paths:
+      - 'frontend/index.html'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Nginx image via Docker Compose
+        run: docker-compose -f docker-compose.nginx.yml build nginx
+
+      - name: Deploy updated container via Docker Compose
+        run: docker-compose -f docker-compose.nginx.yml up -d nginx
+
+      - name: Verify running containers
+        run: docker ps
