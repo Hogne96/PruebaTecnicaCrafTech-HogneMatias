@@ -20,7 +20,7 @@ La solución está dockerizada, orquestada mediante un único archivo `docker-co
 ---
 
 ## Estructura del Proyecto
-
+```
 DEVOPS-INTERVIEW-ULTIMATE/
 ├── backend/              # Código de Django
 │   ├── api (carpeta)
@@ -45,7 +45,7 @@ DEVOPS-INTERVIEW-ULTIMATE/
 │   └── README.md
 ├── docker-compose.yml    # Orquestación de todos los servicios
 └── README.md             # Instrucciones detalladas para compilar y desplegar
-
+```
 
 ---
 
@@ -66,10 +66,6 @@ bash
 git clone https://github.com/Hogne96/PruebaTecnicaCrafTech-HogneMatias.git
 cd PruebaTecnicaCrafTech-HogneMatias
 ```
-
-### 2. Configurar variables de entorno del Backend
-
-
 
 
 ### 2. Configurar variables de entorno del Backend
