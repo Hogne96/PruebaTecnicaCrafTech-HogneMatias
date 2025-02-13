@@ -61,9 +61,16 @@ DEVOPS-INTERVIEW-ULTIMATE/
 
 ### 1. Clonar el repositorio
 
-```bash
+```
+bash
 git clone https://github.com/Hogne96/PruebaTecnicaCrafTech-HogneMatias.git
 cd PruebaTecnicaCrafTech-HogneMatias
+```
+
+### 2. Configurar variables de entorno del Backend
+
+
+
 
 ### 2. Configurar variables de entorno del Backend
 
