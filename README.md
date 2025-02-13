@@ -21,7 +21,7 @@ La solución está dockerizada, orquestada mediante un único archivo `docker-co
 ## Estructura del Proyecto
 ```
 DEVOPS-INTERVIEW-ULTIMATE/
-├── .github/                                            # 
+├── .github/                                            
 │   ├── workflows
 │   │   ├── deploy-nginx.yml                            # Pipeline para actualizar imagen al cambiar el index.html
 ├── backend/                                            # Código de Django
@@ -137,5 +137,28 @@ Esto realizará las siguientes acciones:
 
 ## Notas y Justificación
 
-- Elección de Docker Compose:
-    Se eligió Docker Compose porque permite orquestar fácilmente múltiples servicios (base de datos, backend y frontend) en un solo archivo, facilitando tanto el despliegue.
+### Elección de Docker Compose:
+Se optó por dockerizar la aplicación full-stack y orquestarla mediante Docker Compose debido a las siguientes ventajas:
+- Simplicidad y Reproducibilidad:
+        Con un único archivo de orquestación (docker-compose.yml) se coordinan todos los servicios (base de datos, backend y frontend). Esto facilita el despliegue, ya que se dispone de una configuración centralizada.
+- Separación de Responsabilidades:
+        Cada componente (backend, frontend y base de datos) se construye y se ejecuta en su contenedor, permitiendo gestionar de forma independiente sus dependencias y actualizaciones.
+- Facilidad para Automatización CI/CD:
+        Con pipelines en GitHub Actions se automatiza la construcción y despliegue de nuevas versiones, garantizando que cada actualización se publique (por ejemplo, en Docker Hub) y se refleje inmediatamente en el entorno mediante el pipeline deploy-nginx.yml.
+
+### Detalle de los Archivos Principales
+
+#### Dockerfile del Backend
+    Define cómo construir la imagen del API Django, instalando dependencias y configurando el entrypoint para esperar la base de datos, aplicar migraciones y lanzar el servidor.
+
+#### Dockerfile del Frontend
+    Realiza un build en dos etapas para la aplicación React: primero compila el código con Node y luego crea una imagen basada en Nginx que sirve los archivos estáticos.
+
+#### docker-compose.yml
+    Orquesta los servicios para el entorno de desarrollo (base de datos, backend y frontend), utilizando volúmenes y montajes de código para facilitar la iteración.
+
+#### docker-compose.nginx.yml
+    Específico para desplegar una imagen personalizada de Nginx que sirva el contenido estático actualizado (por ejemplo, tras modificar el index.html); se utiliza en el pipeline de despliegue.
+
+#### Pipeline deploy-nginx.yml
+    Workflow de GitHub Actions que se activa al cambiar el index.html; construye, publica (opcionalmente) y despliega automáticamente la imagen de Nginx mediante Docker Compose.
