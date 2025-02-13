@@ -3,7 +3,7 @@ version: '3.8'
 services:
   nginx:
     build:
-      context: ./frontend
+      context: ./frontend/public
       dockerfile: Dockerfile.nginx
     ports:
       - "8080:80"
