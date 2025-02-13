@@ -2,8 +2,6 @@ version: '3.8'
 
 services:
   nginx:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.nginx
+    image: matihogne/nginx-custom:latest
     ports:
       - "8080:80"
