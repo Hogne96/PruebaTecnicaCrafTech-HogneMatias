@@ -149,16 +149,16 @@ Se optó por dockerizar la aplicación full-stack y orquestarla mediante Docker 
 ### Detalle de los Archivos Principales
 
 #### Dockerfile del Backend
-    Define cómo construir la imagen del API Django, instalando dependencias y configurando el entrypoint para esperar la base de datos, aplicar migraciones y lanzar el servidor.
+Define cómo construir la imagen del API Django, instalando dependencias y configurando el entrypoint para esperar la base de datos, aplicar migraciones y lanzar el servidor.
 
 #### Dockerfile del Frontend
-    Realiza un build en dos etapas para la aplicación React: primero compila el código con Node y luego crea una imagen basada en Nginx que sirve los archivos estáticos.
+Realiza un build en dos etapas para la aplicación React: primero compila el código con Node y luego crea una imagen basada en Nginx que sirve los archivos estáticos.
 
 #### docker-compose.yml
-    Orquesta los servicios para el entorno de desarrollo (base de datos, backend y frontend), utilizando volúmenes y montajes de código para facilitar la iteración.
+Orquesta los servicios para el entorno de desarrollo (base de datos, backend y frontend), utilizando volúmenes y montajes de código para facilitar la iteración.
 
 #### docker-compose.nginx.yml
-    Específico para desplegar una imagen personalizada de Nginx que sirva el contenido estático actualizado (por ejemplo, tras modificar el index.html); se utiliza en el pipeline de despliegue.
+Específico para desplegar una imagen personalizada de Nginx que sirva el contenido estático actualizado (por ejemplo, tras modificar el index.html); se utiliza en el pipeline de despliegue.
 
 #### Pipeline deploy-nginx.yml
-    Workflow de GitHub Actions que se activa al cambiar el index.html; construye, publica (opcionalmente) y despliega automáticamente la imagen de Nginx mediante Docker Compose.
+Workflow de GitHub Actions que se activa al cambiar el index.html; construye, publica (opcionalmente) y despliega automáticamente la imagen de Nginx mediante Docker Compose.
