@@ -62,7 +62,7 @@ DEVOPS-INTERVIEW-ULTIMATE/
 ### 1. Clonar el repositorio
 
 ```
-bash
+```bash
 git clone https://github.com/Hogne96/PruebaTecnicaCrafTech-HogneMatias.git
 cd PruebaTecnicaCrafTech-HogneMatias
 ```
@@ -73,35 +73,41 @@ cd PruebaTecnicaCrafTech-HogneMatias
 En el directorio backend/, asegúrate de contar con los siguientes archivos:
 
 .env.postgres (ya incluido) con contenido similar a:
+```
 DATABASE=postgres
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
 POSTGRES_DB=core
+```
 
 .env con las variables requeridas por Django, por ejemplo:
+```
 SQL_ENGINE=django.db.backends.postgresql
 SQL_DATABASE=postgres
 SQL_USER=user
 SQL_PASSWORD=password
 SQL_HOST=db
 SQL_PORT=5432
+```
 
 Nota: La aplicación ha sido configurada para obtener los datos de la base de datos a través de estas variables (revisa el código fuente en settings.py para confirmar las variables utilizadas).
 
 ### 3. Construir y levantar los contenedores
 
 Desde la raíz del proyecto, ejecuta:
+```
 docker-compose up --build
+```
 
 Esto realizará las siguientes acciones:
 
-Construirá la imagen del backend usando backend/Dockerfile.
-Construirá la imagen del frontend usando frontend/Dockerfile.
-Levantará el servicio de PostgreSQL con la configuración del archivo .env.postgres.
-Orquestará los tres servicios mediante el archivo docker-compose.yml.
+*Construirá la imagen del backend usando backend/Dockerfile.
+*Construirá la imagen del frontend usando frontend/Dockerfile.
+*Levantará el servicio de PostgreSQL con la configuración del archivo .env.postgres.
+*Orquestará los tres servicios mediante el archivo docker-compose.yml.
 
 ### 4. Verificar el funcionamiento
 
-Backend (Django API): http://localhost:8000
-Frontend (React): http://localhost:3000
+*Backend (Django API): http://localhost:8000
+*Frontend (React): http://localhost:3000
 
