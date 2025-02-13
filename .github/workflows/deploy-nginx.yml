@@ -3,7 +3,7 @@ name: Deploy Nginx on index.html changes
 on:
   push:
     paths:
-      - 'frontend/index.html'
+      - 'frontend/public/index.html'
 
 jobs:
   build-and-deploy:
