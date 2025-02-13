@@ -19,8 +19,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ matihogne }}
-          password: ${{ dckr_pat_oCtmCM7zlc4KxndvN7Zr-hwjh-Q }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -28,7 +28,7 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile.nginx
           push: true
-          tags: ${{ matihogne }}/nginx-custom:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/nginx-custom:latest
 
       - name: Deploy updated container via Docker Compose
         run: |
