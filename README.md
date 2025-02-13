@@ -62,7 +62,7 @@ DEVOPS-INTERVIEW-ULTIMATE/
 ### 1. Clonar el repositorio
 
 ```
-```bash
+bash
 git clone https://github.com/Hogne96/PruebaTecnicaCrafTech-HogneMatias.git
 cd PruebaTecnicaCrafTech-HogneMatias
 ```
@@ -101,13 +101,13 @@ docker-compose up --build
 
 Esto realizará las siguientes acciones:
 
-*Construirá la imagen del backend usando backend/Dockerfile.
-*Construirá la imagen del frontend usando frontend/Dockerfile.
-*Levantará el servicio de PostgreSQL con la configuración del archivo .env.postgres.
-*Orquestará los tres servicios mediante el archivo docker-compose.yml.
+- Construirá la imagen del backend usando backend/Dockerfile.
+- Construirá la imagen del frontend usando frontend/Dockerfile.
+- Levantará el servicio de PostgreSQL con la configuración del archivo .env.postgres.
+- Orquestará los tres servicios mediante el archivo docker-compose.yml.
 
 ### 4. Verificar el funcionamiento
 
-*Backend (Django API): http://localhost:8000
-*Frontend (React): http://localhost:3000
+- Backend (Django API): http://localhost:8000
+- Frontend (React): http://localhost:3000
 
